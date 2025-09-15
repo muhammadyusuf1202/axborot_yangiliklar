@@ -40,6 +40,15 @@
                                             <li class="nav-item active">
                                                 <a class="nav-link tm-nav-link" href="{% url 'home' %}">Yangiliklar</a>
                                             </li>
+                                            <!-- Til tugmalari -->
+                                            <!-- <form action="/i18n/setlang/" method="post">
+                                                {% csrf_token %}
+                                                <select name="language" onchange="this.form.submit()">
+                                                  <option value="uz" {% if LANGUAGE_CODE == 'uz' %}selected{% endif %}>O'zbekcha</option>
+                                                  <option value="ru" {% if LANGUAGE_CODE == 'ru' %}selected{% endif %}>Русский</option>
+                                                  <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+                                                </select>
+                                              </form> -->
                                         </ul>
                                     </div>
                                 </nav>
@@ -52,6 +61,8 @@
                 <div class="tm-welcome-container-inner">
                     <h2 class="tm-welcome-text mb-1 text-white">Axborot Yangiliklar</h2>
                     <p class="tm-welcome-text mb-5 text-white">2025</p>
+                    <br>
+                    <h1 class="tm-welcome-text mb-1 text-white"><a  target="_blank" href="https://t.me/axborot_yangiligi_2025">Telegram Kanalimiz</a></h1>
                     <a href="#content" class="btn tm-btn-animate tm-btn-cta tm-icon-down">
                         <span>Pastga</span>
                     </a>
@@ -72,6 +83,27 @@
                     <div class="row">
                         <div class="col-12">
                             <h2 class="tm-page-title mb-4">Yangiliklar - News</h2>
+
+                            <!-- Search -->
+                            <!-- <form method="get" action="{% url 'search' %}">
+                                <input type="text" name="q" placeholder="Qidiruv..." value="{{ query }}">
+                                <button type="submit">Izlash</button>
+                            </form>
+                            
+                            {% if query %}
+                                <h3>"{{ query }}" uchun natijalar:</h3>
+                                <ul>
+                                    {% for item in results %}
+                                        <li>
+                                            <a href="{% url 'news_detail' item.pk %}">{{ item.title }}</a>
+                                        </li>
+                                    {% empty %}
+                                        <li>Hech narsa topilmadi.</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %} -->
+                            
+                            <!-- Kategoriyalar -->
                             <div class="tm-categories-container mb-5">
                                 <h3 class="tm-text-primary tm-categories-text">Categories:</h3>
                                 <ul class="nav tm-category-list">
@@ -106,7 +138,6 @@
                                         </a>
                                     </li>
                                 </ul>
-                                
                             </div>        
                         </div>
                     </div>
@@ -120,12 +151,17 @@
                                 {% else %}
                                     <img src="{% static 'img/default.jpg' %}" alt="Image" class="img-fluid tm-catalog-item-img">    
                                 {% endif %}
-                                <a href="#" class="position-absolute tm-img-overlay">
+                                <a href="{% url 'news_detail' item.pk %}" class="position-absolute tm-img-overlay">
                                     <i class="fas fa-play tm-overlay-icon"></i>
                                 </a>
                             </div>    
                             <div class="p-4 tm-bg-gray tm-catalog-item-description">
-                                <h3 class="tm-text-primary mb-3 tm-catalog-item-title">{{ item.title }}</h3>
+                                <h3 class="tm-text-primary mb-3 tm-catalog-item-title">
+                                    <a href="{% url 'news_detail' item.pk %}">{{ item.title }}</a>
+                                    {% if item.is_new %}
+                                        <span style="color: red; font-size: 14px;">NEW</span>
+                                    {% endif %}
+                                </h3>
                                 <p class="tm-catalog-item-text">{{ item.content|truncatewords:20 }}</p>
                             </div>
                         </div>
