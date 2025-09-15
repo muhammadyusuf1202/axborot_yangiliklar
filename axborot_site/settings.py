@@ -20,12 +20,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6_ke^i4lqgi-$v9j5&1ku6-a3l6kynd4#r1d&%k1$5m(56c1!&'
+# SECRET_KEY = 'django-insecure-6_ke^i4lqgi-$v9j5&1ku6-a3l6kynd4#r1d&%k1$5m(56c1!&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-6_ke^i4lqgi-$v9j5&1ku6-a3l6kynd4#r1d&%k1$5m(56c1!&")
+DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
+
+ALLOWED_HOSTS = ["*"]
+
 
 
 # Application definition
@@ -38,7 +46,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'news',
+    'drf_spectacular',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -51,6 +64,25 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'axborot_site.urls'
+
+# from django.utils.translation import gettext_lazy as _
+
+# LANGUAGE_CODE = 'uz'
+
+# USE_I18N = True
+# USE_L10N = True
+# USE_TZ = True
+
+# LANGUAGES = [
+#     ('uz', _('Uzbek')),
+#     ('ru', _('Russian')),
+#     ('en', _('English')),
+# ]
+
+# LOCALE_PATHS = [
+#     BASE_DIR / 'locale',
+# ]
+
 
 TEMPLATES = [
     {
