@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ item.title }} - Axborot Yangiliklar</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>{{ item.title }}</h1>
+    <p><small>Kategoriya: {{ item.get_category_display }} | {{ item.created_at|date:"d-m-Y H:i" }}</small></p>
+    
+    {% if item.image %}
+        <img src="{{ item.image.url }}" alt="{{ item.title }}" class="img-fluid mb-3">
+    {% endif %}
+
+    {% if item.video %}
+        <video controls class="w-100 mb-3">
+            <source src="{{ item.video.url }}" type="video/mp4">
+            Sizning brauzeringiz videoni qo‘llab-quvvatlamaydi.
+        </video>
+    {% endif %}
+
+    <p>{{ item.content|linebreaks }}</p>
+
+    <a href="{% url 'home' %}" class="btn btn-secondary mt-3">⬅ Orqaga</a>
+</div>
+</body>
+</html>
